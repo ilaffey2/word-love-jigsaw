@@ -98,12 +98,12 @@ export default function ScoreRadar({
         indexBy="key"
         valueFormat=">-.2f"
         margin={margin}
-        borderColor={{ from: "color" }}
-        borderWidth={0}
+        borderColor="black"
+        borderWidth={2}
         gridLabelOffset={16}
         enableDots={false}
         curve="catmullRomClosed"
-        colors={invert ? ["#ffffff"] : ["#bae6fd"]}
+        colors={invert ? ["#ffffff"] : ["#b9375e"]}
         fillOpacity={0.8}
         motionConfig="default"
         blendMode="normal"

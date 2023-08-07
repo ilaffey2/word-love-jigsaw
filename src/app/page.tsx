@@ -16,10 +16,14 @@ export default function Home() {
   const [scoresRight, setScoresRight] = useState<SimilarityScores>();
   const [isLoading, setIsLoading] = useState(false);
 
+  // Add a new state hook to control the transition
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  // Modify your fetchScores to trigger transition after API call completes
   const fetchScores = useCallback(
     (
-      inputs: string[],
-      callback: React.Dispatch<React.SetStateAction<SimilarityScores>>
+      callback: React.Dispatch<React.SetStateAction<SimilarityScores>>,
+      inputs?: string[]
     ) => {
       if (isLoading) return;
 
@@ -31,6 +35,8 @@ export default function Home() {
         .then((res) => res.json())
         .then((res) => {
           callback(res);
+          // After the response is received, start a timer to trigger transition
+          setTimeout(() => setIsTransitioning(true), 2000);
         })
         .catch((error) => {
           if (error.name !== "AbortError") throw error;
@@ -40,13 +46,22 @@ export default function Home() {
     [isLoading]
   );
 
+  useEffect(() => {
+    // fetch on first load
+    //@ts-ignore
+    fetchScores(setScoresLeft);
+    //@ts-ignore
+    fetchScores(setScoresRight);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const onSubmit = useCallback(
     (e: SyntheticEvent) => {
       e.preventDefault();
       //@ts-ignore
-      textLeft && fetchScores([textLeft], setScoresLeft);
+      textLeft && fetchScores(setScoresLeft, [textLeft.toLocaleLowerCase()]);
       //@ts-ignore
-      textRight && fetchScores([textRight], setScoresRight);
+      textRight && fetchScores(setScoresRight, [textRight.toLocaleLowerCase()]);
     },
     [fetchScores, textLeft, textRight]
   );
@@ -73,7 +88,7 @@ export default function Home() {
         <div className="flex flex-col items-center">
           <div
             className="h-[500px] w-[500px] max-w-[100vw] max-h-[100vh] font-mono p-4"
-            style={{ backgroundColor: "#bae6fd" }}
+            style={{ backgroundColor: "#e05780" }}
           >
             <ScoreRadar
               scores={scoresRight}
