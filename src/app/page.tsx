@@ -66,7 +66,7 @@ export default function Home() {
   );
 
   return (
-    <main className="flex flex-col min-h-screen items-center justify-center px-4 md:px-8 py-8 md:py-0 bg-rose-100">
+    <main className="flex flex-col min-h-screen items-center justify-center px-4 md:px-8 py-8 md:py-0 bg-rose-100 overflow-y-auto">
       <div className="w-full p-4">
         <Hero />
       </div>
