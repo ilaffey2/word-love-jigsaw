@@ -10,9 +10,11 @@ import clsx from "clsx";
 export default function ScoreRadar({
   scores,
   isLoading,
+  invert,
 }: {
   scores?: SimilarityScores;
   isLoading?: boolean;
+  invert?: boolean;
 }) {
   const labels = Object.keys(EMOTIONS);
   const hasSingleTerm = useMemo(
@@ -101,7 +103,7 @@ export default function ScoreRadar({
         gridLabelOffset={16}
         enableDots={false}
         curve="catmullRomClosed"
-        colors={["#bae6fd"]}
+        colors={invert ? ["#ffffff"] : ["#bae6fd"]}
         fillOpacity={0.8}
         motionConfig="default"
         blendMode="normal"

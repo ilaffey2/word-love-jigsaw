@@ -54,35 +54,44 @@ export default function Home() {
   return (
     <main className="flex h-[90vh] md:h-screen flex-col items-center px-8 justify-center">
       <div className="flex flex-grow" />
-      <div className="flex flex-col items-center h-[500px] w-[500px] max-w-[100vw] max-h-[100vh] font-mono p-4">
-        <ScoreRadar scores={scores} isLoading={isLoading} />
-      </div>
-      <form className="flex flex-grow items-end w-full max-w-md">
-        <div
-          className={clsx(
-            "flex flex-col md:flex-row md:space-x-2 space-y-4 md:space-y-0 w-full"
-          )}
-        >
+
+      <div className="flex flex-row space-x-4">
+        <div className="flex flex-col items-center">
+          <div className="h-[500px] w-[500px] max-w-[100vw] max-h-[100vh] font-mono p-4">
+            <ScoreRadar scores={scores} isLoading={isLoading} invert={false} />
+          </div>
           <Input
-            className="flex-grow text-lg h-12 md:text-base md:h-10"
+            className="text-lg h-12 md:text-base md:h-10 mt-4"
             value={text}
             onChange={(e) => setText(e.target.value)}
           />
-          <div className="flex flex-row space-x-2">
-            <Button
-              type="submit"
-              onClick={onSubmit}
-              disabled={!text}
-              className="text-lg flex-grow h-12 md:text-base md:h-10"
-            >
-              Calculate
-            </Button>
-            <Button type="button" onClick={onShuffle} className="h-12 md:h-10">
-              <ShuffleIcon className="h-6 w-6" />
-            </Button>
-          </div>
         </div>
-      </form>
+        <div className="flex flex-col items-center">
+          <div
+            className="h-[500px] w-[500px] max-w-[100vw] max-h-[100vh] font-mono p-4"
+            style={{ backgroundColor: "#bae6fd" }}
+          >
+            <ScoreRadar scores={scores} isLoading={isLoading} invert={true} />
+          </div>
+          <Input
+            className="text-lg h-12 md:text-base md:h-10 mt-4"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-grow items-center justify-center w-full max-w-md">
+        <Button
+          type="submit"
+          onClick={onSubmit}
+          disabled={!text}
+          className="text-lg h-12 md:text-base md:h-10"
+        >
+          Calculate
+        </Button>
+      </div>
+
       <Footer />
     </main>
   );
