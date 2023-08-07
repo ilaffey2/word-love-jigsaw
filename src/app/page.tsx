@@ -1,13 +1,12 @@
 "use client";
 
 import { useState, useCallback, SyntheticEvent, useEffect } from "react";
-import clsx from "clsx";
-import { GitHubLogoIcon, ShuffleIcon } from "@radix-ui/react-icons";
 import ScoreRadar from "@/components/ScoreRadar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SimilarityScores } from "@/types";
 import Footer from "@/components/Footer";
+import Hero from "@/components/Hero";
 
 export default function Home() {
   const [textLeft, setTextLeft] = useState("");
@@ -67,12 +66,13 @@ export default function Home() {
   );
 
   return (
-    <main className="flex h-[90vh] md:h-screen flex-col items-center px-8 justify-center">
-      <div className="flex flex-grow" />
-
-      <div className="flex flex-row space-x-4">
-        <div className="flex flex-col items-center">
-          <div className="h-[500px] w-[500px] max-w-[100vw] max-h-[100vh] font-mono p-4">
+    <main className="flex flex-col min-h-screen items-center justify-center px-4 md:px-8 py-8 md:py-0 bg-rose-100">
+      <div className="w-full p-4">
+        <Hero />
+      </div>
+      <div className="w-full flex flex-col space-y-4 md:space-y-0 items-center flex-grow md:flex-row md:space-x-20">
+        <div className="flex flex-col items-center w-full">
+          <div className="h-[300px] md:h-[500px] w-full md:w-[500px] max-w-full md:max-w-[500px] max-h-full md:max-h-[500px] font-mono p-4 rounded-full">
             <ScoreRadar
               scores={scoresLeft}
               isLoading={isLoading}
@@ -80,15 +80,16 @@ export default function Home() {
             />
           </div>
           <Input
-            className="text-lg h-12 md:text-base md:h-10 mt-4"
+            className="text-base h-10 w-full mt-4"
             value={textLeft}
             onChange={(e) => setTextLeft(e.target.value)}
+            placeholder="Your name"
           />
         </div>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center w-full">
           <div
-            className="h-[500px] w-[500px] max-w-[100vw] max-h-[100vh] font-mono p-4"
-            style={{ backgroundColor: "#e05780" }}
+            className="h-[300px] md:h-[500px] w-full md:w-[500px] max-w-full md:max-w-[500px] max-h-full md:max-h-[500px] font-mono p-4 rounded-full"
+            // style={{ backgroundColor: "#e05780" }}
           >
             <ScoreRadar
               scores={scoresRight}
@@ -97,24 +98,23 @@ export default function Home() {
             />
           </div>
           <Input
-            className="text-lg h-12 md:text-base md:h-10 mt-4"
+            className="text-base h-10 w-full mt-4"
             value={textRight}
             onChange={(e) => setTextRight(e.target.value)}
+            placeholder="Partner's name"
           />
         </div>
       </div>
-
-      <div className="flex flex-grow items-center justify-center w-full max-w-md">
+      <div className="flex justify-center w-full max-w-md mt-4">
         <Button
           type="submit"
           onClick={onSubmit}
           disabled={!textLeft || !textRight}
-          className="text-lg h-12 md:text-base md:h-10"
+          className="text-base h-10 bg-rose-300"
         >
           Calculate
         </Button>
       </div>
-
       <Footer />
     </main>
   );
