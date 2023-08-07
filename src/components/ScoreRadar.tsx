@@ -62,6 +62,7 @@ export default function ScoreRadar({
   const theme = {
     fontFamily: "inherit",
     fontSize: 20,
+    textColor: "black",
     legends: { text: { fontSize: 12 } },
     tooltip: { container: { fontSize: 12 } },
     labels: { text: { fontSize: 9, maxWidth: 9 } },
@@ -110,6 +111,11 @@ export default function ScoreRadar({
         gridLevels={3}
         maxValue={1}
         legends={legends}
+        sliceTooltip={({ index, data }) => {
+          const datum = data.find((d) => d.id === index);
+          //@ts-ignore
+          return <strong>{TRAITS[index]}</strong>;
+        }}
       />
       {hasSingleTerm && scores && (
         <div
