@@ -1,8 +1,8 @@
-# Word Emotion Shapes
+# Word Love Jigsaw
 
 ![screenshot](./public/screenshot.png)
 
-This project visualizes the emotional connotation of words using embeddings.
+This project visualizes the emotional connotation of words using embeddings, then compares two different names based on them.
 
 For a given word, we calculate the cosine distance to each emotion (represented by an emoji and description), and use this data to create a Catmull-Rom curve.
 
