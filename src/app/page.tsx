@@ -10,12 +10,17 @@ import { SimilarityScores } from "@/types";
 import Footer from "@/components/Footer";
 
 export default function Home() {
-  const [text, setText] = useState("");
-  const [scores, setScores] = useState<SimilarityScores>();
+  const [textLeft, setTextLeft] = useState("");
+  const [textRight, setTextRight] = useState("");
+  const [scoresLeft, setScoresLeft] = useState<SimilarityScores>();
+  const [scoresRight, setScoresRight] = useState<SimilarityScores>();
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchScores = useCallback(
-    (inputs?: string[]) => {
+    (
+      inputs: string[],
+      callback: React.Dispatch<React.SetStateAction<SimilarityScores>>
+    ) => {
       if (isLoading) return;
 
       setIsLoading(true);
@@ -25,8 +30,7 @@ export default function Home() {
       })
         .then((res) => res.json())
         .then((res) => {
-          setScores(res);
-          if (!inputs) setText(Object.keys(res).join(", "));
+          callback(res);
         })
         .catch((error) => {
           if (error.name !== "AbortError") throw error;
@@ -36,19 +40,15 @@ export default function Home() {
     [isLoading]
   );
 
-  useEffect(() => {
-    // fetch on first load
-    fetchScores();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const onShuffle = useCallback(() => fetchScores(), [fetchScores]);
   const onSubmit = useCallback(
     (e: SyntheticEvent) => {
       e.preventDefault();
-      text && fetchScores([text]);
+      //@ts-ignore
+      textLeft && fetchScores([textLeft], setScoresLeft);
+      //@ts-ignore
+      textRight && fetchScores([textRight], setScoresRight);
     },
-    [fetchScores, text]
+    [fetchScores, textLeft, textRight]
   );
 
   return (
@@ -58,12 +58,16 @@ export default function Home() {
       <div className="flex flex-row space-x-4">
         <div className="flex flex-col items-center">
           <div className="h-[500px] w-[500px] max-w-[100vw] max-h-[100vh] font-mono p-4">
-            <ScoreRadar scores={scores} isLoading={isLoading} invert={false} />
+            <ScoreRadar
+              scores={scoresLeft}
+              isLoading={isLoading}
+              invert={false}
+            />
           </div>
           <Input
             className="text-lg h-12 md:text-base md:h-10 mt-4"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
+            value={textLeft}
+            onChange={(e) => setTextLeft(e.target.value)}
           />
         </div>
         <div className="flex flex-col items-center">
@@ -71,12 +75,16 @@ export default function Home() {
             className="h-[500px] w-[500px] max-w-[100vw] max-h-[100vh] font-mono p-4"
             style={{ backgroundColor: "#bae6fd" }}
           >
-            <ScoreRadar scores={scores} isLoading={isLoading} invert={true} />
+            <ScoreRadar
+              scores={scoresRight}
+              isLoading={isLoading}
+              invert={true}
+            />
           </div>
           <Input
             className="text-lg h-12 md:text-base md:h-10 mt-4"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
+            value={textRight}
+            onChange={(e) => setTextRight(e.target.value)}
           />
         </div>
       </div>
@@ -85,7 +93,7 @@ export default function Home() {
         <Button
           type="submit"
           onClick={onSubmit}
-          disabled={!text}
+          disabled={!textLeft || !textRight}
           className="text-lg h-12 md:text-base md:h-10"
         >
           Calculate

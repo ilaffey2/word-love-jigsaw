@@ -4,7 +4,7 @@ import * as d3 from "d3";
 import { useMemo } from "react";
 import AutoAdjustingText from "./AutoAdjustingText";
 import { LegendProps } from "@nivo/legends";
-import { EMOTIONS } from "@/constants";
+import { EMOTIONS, TRAITS } from "@/constants";
 import clsx from "clsx";
 
 export default function ScoreRadar({
@@ -16,7 +16,7 @@ export default function ScoreRadar({
   isLoading?: boolean;
   invert?: boolean;
 }) {
-  const labels = Object.keys(EMOTIONS);
+  const labels = Object.keys(TRAITS);
   const hasSingleTerm = useMemo(
     () => Object.keys(scores ?? {}).length <= 1,
     [scores]

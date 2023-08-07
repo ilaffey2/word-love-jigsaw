@@ -3,7 +3,7 @@ import { dot } from "mathjs";
 import { NextResponse } from "next/server";
 import { Configuration, OpenAIApi } from "openai";
 import words from "@/data/words.json";
-import emotionEmbeddings from "@/data/emotionEmbeddings.json";
+import traitEmbeddings from "@/data/traitEmbeddings.json";
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -31,12 +31,12 @@ export async function POST(request: Request) {
 
   inputs.forEach((input, i) => {
     scores[input] = {};
-    let emotionKeys = Object.keys(emotionEmbeddings);
+    let emotionKeys = Object.keys(traitEmbeddings);
 
     for (let emotion of emotionKeys) {
       scores[input][emotion] = dot(
         embeddingResponse.data.data[i].embedding,
-        emotionEmbeddings[emotion as keyof typeof emotionEmbeddings]
+        traitEmbeddings[emotion as keyof typeof traitEmbeddings]
       );
     }
   });
