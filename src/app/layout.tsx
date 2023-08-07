@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     images: [
       {
-        url: "https://word-love-jigsaw.vercel.app/screenshot.png",
+        url: "https://love-jigsaw.vercel.app/screenshot.png",
         alt: "Love Jigsaw",
       },
     ],
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     description,
     images: [
       {
-        url: "https://word-love-jigsaw.vercel.app/screenshot.png",
+        url: "https://love-jigsaw.vercel.app/screenshot.png",
         alt: "Love Jigsaw",
       },
     ],
